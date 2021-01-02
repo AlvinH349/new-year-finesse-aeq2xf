@@ -8,7 +8,7 @@
 
 
 
-  
+
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script src="index.js"> </script>
 </head>
@@ -28,39 +28,66 @@
 
 		<hr>
 
-		<section id="firebaseui-auth-container"></section>
 
-		<section id="description-container">
-			<h2>What are your goals for the new year?</h2>
-			<p>RSVP and share in the discussion.</p>
 
-			<p id="number-attending"></p>
+		<div class="row">
 
-		</section>
 
-		<section id="guestbook-container">
-			<h2> "I will be sucessful in 2021!"</h2>
-			<button id="rsvp-yes">Yes</button>
-			<button id="rsvp-no">No</button>
+			<div class="column">
+				<section id="firebaseui-auth-container"></section>
 
-			<h2>Discussion</h2>
+				<section id="description-container">
+					<h2>What are your goals for the new year?</h2>
+					<p>RSVP and share in the discussion.</p>
 
-			<form id="leave-message">
-				<label>Leave a message: </label>
-				<input type="text" id="message">
-				<br>
-        <input type="range" name="rangeInput" id="slidein" min="0" max="2" onchange="updateTextInput(this.value);" value="0">
-				<label for="rangetext" id="textInput" > Not Started</label>
-        <br>
-				<button type="submit">
+					<p id="number-attending"></p>
+
+				</section>
+
+				<section id="guestbook-container">
+					<h2> "I will be sucessful in 2021!"</h2>
+					<button id="rsvp-yes">Yes</button>
+					<button id="rsvp-no">No</button>
+
+					<h2>Discussion</h2>
+
+					<form id="leave-message">
+						<label>Leave a message: </label>
+						<input type="text" id="message">
+						<br>
+						<input type="range" name="rangeInput" id="slidein" min="0" max="2" onchange="updateTextInput(this.value);" value="0">
+            <br>
+						<label for="rangetext" id="textInput" > Not Started</label>
+						<br>
+						<button type="submit">
        <i class="material-icons">send</i>
        <span>Send</span>
      </button>
-			</form>
+					</form>
 
-			<section id="guestbook"></section>
+					<section id="guestbook"></section>
 
-		</section>
+				</section>
+			</div>
+
+
+			<div class="column">
+				<h2> My Resolution </h2>
+				<section id="mybook"></section>
+			</div>
+
+<!--
+			<div class="column">
+				<h2> My Favorite Resolutions </h2>
+				<section id="favbook"></section>
+			</div>
+-->
+
+		</div>
+
+
+
+
 
 	</div>
 

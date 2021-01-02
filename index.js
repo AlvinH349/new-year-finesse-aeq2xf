@@ -17,11 +17,14 @@ const form = document.getElementById("leave-message");
 const input = document.getElementById("message");
 const slideinput = document.getElementById("slidein"); //input of input slide progress stored in variable
 const guestbook = document.getElementById("guestbook");
+const mybook = document.getElementById("mybook");
 const numberAttending = document.getElementById("number-attending");
 const rsvpYes = document.getElementById("rsvp-yes");
 const rsvpNo = document.getElementById("rsvp-no");
 
-var rsvpListener = null;
+const currentuser = "";
+
+var rsvpListener = null; //listen to events based upon the variable (based upon id name)
 var guestbookListener = null;
 
 async function main() {
@@ -83,6 +86,7 @@ async function main() {
   // Listen to the current Auth state
   firebase.auth().onAuthStateChanged(user => {
     if (user) {
+      // currentuser = user;
       startRsvpButton.textContent = "LOGOUT";
       // Show guestbook to logged-in users
       guestbookContainer.style.display = "block";
@@ -174,7 +178,7 @@ function subscribeGuestbook() {
       guestbook.innerHTML = "";
       // Loop through documents in database
       snaps.forEach(doc => {
-        // Create an HTML entry for each document and add it to the chat
+        // Create an HTML entry for each document and add it to the chat==================
         const entry = document.createElement("p");
         entry.textContent = doc.data().name + ": " + doc.data().text;
         guestbook.appendChild(entry);
@@ -182,18 +186,63 @@ function subscribeGuestbook() {
         //example of adding progress bar
         if (doc.data().progress == 0)
           guestbook.innerHTML +=
-            "<progress value='0' max='100'> 0 </progress>  Not Started";
+            "<progress value='0' max='100'> 0 </progress> <br> Not Started <hr>";
 
         if (doc.data().progress == 1)
           guestbook.innerHTML +=
-            "<progress value='50' max='100'> 50 </progress>  In Progress";
+            "<progress value='50' max='100'> 50 </progress> <br> In Progress <hr>";
 
         if (doc.data().progress == 2)
           guestbook.innerHTML +=
-            "<progress value='100' max='100'> 100 </progress>  Completed";
-      });
-    });
+            "<progress value='100' max='100'> 100 </progress> <br>  Completed <hr>";
+      }); //close snaps.forEach
+
+      //display currentuser's resolution================================================
+      mybook.innerHTML = "";
+      // Loop through documents in database
+      snaps.forEach(doc => {
+        if (firebase.auth().currentUser.displayName == doc.data().name) {
+          // Create an HTML entry for each document and add it to the chat
+
+          // show delete button based upon current user
+          //   mybook.innerHTML += "<button data-id='" + "key" + "' onclick='deleteMessage(this);'>";
+          /*
+          mybook.innerHTML +=
+            "<input type='button' data-id='" +
+            snaps.key +
+            "' value='Click Me' onclick='deleteMessage(this);>";
+            */
+
+          const entry = document.createElement("p");
+          entry.textContent = doc.data().name + ": " + doc.data().text;
+          mybook.appendChild(entry);
+
+          //example of adding progress bar
+          if (doc.data().progress == 0)
+            mybook.innerHTML +=
+              "<progress value='0' max='100'> 0 </progress> <br> Not Started <hr>";
+
+          if (doc.data().progress == 1)
+            mybook.innerHTML +=
+              "<progress value='50' max='100'> 50 </progress> <br> In Progress <hr>";
+
+          if (doc.data().progress == 2)
+            mybook.innerHTML +=
+              "<progress value='100' max='100'> 100 </progress> <br>  Completed <hr>";
+        } //close if firebase.auth().currentUser.displayName == doc.data().name
+      }); //close snaps.forEach
+    }); //close onSnapshot
+} //close subscribefunction
+
+/*
+function deleteMessage(self) {
+    // get message ID
+    var messageId = self.getAttribute("data-id");
+ 
+    // delete message
+    firebase.firestore().collection("guestbook").child(messageId).remove();
 }
+*/
 
 // Unsubscribe from guestbook updates
 function unsubscribeGuestbook() {
